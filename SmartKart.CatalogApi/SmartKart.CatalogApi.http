@@ -1,0 +1,6 @@
+@SmartKart.CatalogApi_HostAddress = http://localhost:5224
+
+GET {{SmartKart.CatalogApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
