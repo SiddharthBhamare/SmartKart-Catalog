@@ -5,6 +5,7 @@ using SmartKart.CatalogApi.Domain.Interfaces;
 using SmartKart.CatalogApi.Infrastructure.DBContext;
 using SmartKart.CatalogApi.Infrastructure.Repositories;
 using SmartKart.CatalogApi.Infrastructure.Services;
+using SmartKart.CatalogApi.Infrastructure; // New using statement for the extensions
 
 namespace SmartKart.CatalogApi
 {
@@ -14,45 +15,31 @@ namespace SmartKart.CatalogApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllers();
+            // Use the new extension method to add Swagger, Authentication, and Authorization services
+            builder.Services.AddSwaggerAndAuthentication(builder.Configuration);
 
-            // Add Swagger/OpenAPI services for API documentation
+            // Add other services here
+            builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
-
-
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<ICategoryService,CategoryService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IBrandService, BrandService>();
             builder.Services.AddScoped<IPaginationService, PaginationService>();
             builder.Services.AddScoped<IProductService, ProductService>();
 
-
-            // Read the connection string and register the DbContext
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<CatalogDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                // Use Swagger and SwaggerUI in the development environment
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
+            // Use the new extension method to configure the middleware
+            app.UseSwaggerAndAuthentication();
 
             app.MapControllers();
-
             app.Run();
         }
     }

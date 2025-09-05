@@ -3,7 +3,6 @@ using Moq;
 using SmartKart.CatalogApi.Application.Dto;
 using SmartKart.CatalogApi.Application.Interfaces;
 using SmartKart.CatalogApi.Controllers;
-using SmartKart.CatalogApi.Domain.Entities;
 
 namespace SmartKart.CatalogApi.Test
 {

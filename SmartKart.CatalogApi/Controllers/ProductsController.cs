@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartKart.CatalogApi.Application.Dto;
 using SmartKart.CatalogApi.Application.Exceptions;
 using SmartKart.CatalogApi.Application.Interfaces;
@@ -8,6 +9,7 @@ namespace SmartKart.CatalogApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize("AdminOrVendor")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
