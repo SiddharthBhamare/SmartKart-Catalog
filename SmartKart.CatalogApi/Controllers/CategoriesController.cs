@@ -2,11 +2,13 @@
 using SmartKart.CatalogApi.Domain.Exceptions;
 using SmartKart.CatalogApi.Application.Dto;
 using SmartKart.CatalogApi.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SmartKart.CatalogApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize("AdminOnly")]
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;

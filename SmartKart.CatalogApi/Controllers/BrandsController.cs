@@ -4,6 +4,7 @@ using SmartKart.CatalogApi.Domain.Entities;
 using SmartKart.CatalogApi.Domain.Exceptions;
 using SmartKart.CatalogApi.Application.Dto;
 using SmartKart.CatalogApi.Application.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SmartKart.CatalogApi.Controllers
 {
@@ -11,6 +12,8 @@ namespace SmartKart.CatalogApi.Controllers
     // automatic model validation and HTTP 400 responses.
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize("AdminOnly")]
+
     public class BrandsController : ControllerBase
     {
         private readonly IBrandService _brandService;
